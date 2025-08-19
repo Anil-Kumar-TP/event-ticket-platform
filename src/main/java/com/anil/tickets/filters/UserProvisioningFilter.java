@@ -1,6 +1,6 @@
 package com.anil.tickets.filters;
 
-import com.anil.tickets.domain.User;
+import com.anil.tickets.domain.entities.User;
 import com.anil.tickets.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

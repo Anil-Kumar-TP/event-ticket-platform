@@ -1,4 +1,4 @@
-package com.anil.tickets.domain;
+package com.anil.tickets.domain.entities;
 
 public enum EventStatusEnum {
     DRAFT,PUBLISHED,CANCELLED,COMPLETED

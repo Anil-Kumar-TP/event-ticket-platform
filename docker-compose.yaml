@@ -11,6 +11,7 @@ services:
       POSTGRES_USER: ticket_user
       POSTGRES_PASSWORD: ticket
       POSTGRES_DB: ticket_db
+      TZ: Asia/Kolkata
 
   adminer:
     image: adminer:latest

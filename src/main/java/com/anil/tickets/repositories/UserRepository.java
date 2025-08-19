@@ -1,6 +1,6 @@
 package com.anil.tickets.repositories;
 
-import com.anil.tickets.domain.User;
+import com.anil.tickets.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

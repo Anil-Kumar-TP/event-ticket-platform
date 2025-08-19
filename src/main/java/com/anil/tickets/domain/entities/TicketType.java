@@ -1,4 +1,4 @@
-package com.anil.tickets.domain;
+package com.anil.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +31,9 @@ public class TicketType {
     @Column(name = "price",nullable = false)
     private Double price;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "total_available")
     private Integer totalAvailable;
 
@@ -53,11 +56,11 @@ public class TicketType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TicketType that)) return false;
-        return id.equals(that.id) && name.equals(that.name) && price.equals(that.price) && totalAvailable.equals(that.totalAvailable) && createdAt.equals(that.createdAt) && updatedAt.equals(that.updatedAt);
+        return id.equals(that.id) && name.equals(that.name) && price.equals(that.price) && description.equals(that.description) && totalAvailable.equals(that.totalAvailable) && createdAt.equals(that.createdAt) && updatedAt.equals(that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, totalAvailable, createdAt, updatedAt);
+        return Objects.hash(id, name, price, description, totalAvailable, createdAt, updatedAt);
     }
 }
