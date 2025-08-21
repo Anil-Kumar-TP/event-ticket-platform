@@ -2,10 +2,9 @@ package com.anil.tickets.mappers;
 
 import com.anil.tickets.domain.CreateEventRequest;
 import com.anil.tickets.domain.CreateTicketTypeRequest;
-import com.anil.tickets.domain.dtos.CreateEventRequestDto;
-import com.anil.tickets.domain.dtos.CreateEventResponseDto;
-import com.anil.tickets.domain.dtos.CreateTicketTypeRequestDto;
+import com.anil.tickets.domain.dtos.*;
 import com.anil.tickets.domain.entities.Event;
+import com.anil.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -17,4 +16,8 @@ public interface EventMapper {
     CreateEventRequest fromDto(CreateEventRequestDto dto);
 
     CreateEventResponseDto toDto(Event event);
+
+    ListEventTicketTypeResponseDto toDto(TicketType ticketType);
+
+    ListEventResponseDto toListEventResponseDto(Event event);
 }
