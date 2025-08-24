@@ -1,6 +1,7 @@
 package com.anil.tickets.services;
 
 import com.anil.tickets.domain.CreateEventRequest;
+import com.anil.tickets.domain.UpdateEventRequest;
 import com.anil.tickets.domain.entities.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface EventService {
     Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable);
 
     Optional<Event> getEventForOrganizer(UUID organizerId,UUID id);
+
+    Event updateEventForOrganizer(UUID organizerId, UUID id, UpdateEventRequest event);
 }

@@ -1,10 +1,8 @@
 package com.anil.tickets.controllers;
 
 import com.anil.tickets.domain.CreateEventRequest;
-import com.anil.tickets.domain.dtos.CreateEventRequestDto;
-import com.anil.tickets.domain.dtos.CreateEventResponseDto;
-import com.anil.tickets.domain.dtos.GetEventDetailsResponseDto;
-import com.anil.tickets.domain.dtos.ListEventResponseDto;
+import com.anil.tickets.domain.UpdateEventRequest;
+import com.anil.tickets.domain.dtos.*;
 import com.anil.tickets.domain.entities.Event;
 import com.anil.tickets.mappers.EventMapper;
 import com.anil.tickets.services.EventService;
@@ -52,6 +50,15 @@ public class EventController {
                 .map(eventMapper::toGetEventDetailsResponseDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(@AuthenticationPrincipal Jwt jwt,@PathVariable UUID eventId, @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto){
+        UpdateEventRequest updateEventRequest = eventMapper.fromDto(updateEventRequestDto);
+        UUID userId = parseUserId(jwt);
+        Event updatedEvent = eventService.updateEventForOrganizer(userId,eventId,updateEventRequest);
+        UpdateEventResponseDto updateEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+        return ResponseEntity.ok(updateEventResponseDto);
     }
 
     private UUID parseUserId(Jwt jwt){
