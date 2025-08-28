@@ -109,4 +109,12 @@ public class GlobalExceptionHandler {
         errorDto.setError("Tickets are sold out for this ticket type");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleTicketNotFoundException(TicketNotFoundException e){
+        log.error("Caught TicketNotFoundException",e);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Tickets not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
 }
