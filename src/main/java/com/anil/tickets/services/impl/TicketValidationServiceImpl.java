@@ -25,23 +25,22 @@ public class TicketValidationServiceImpl implements TicketValidationService {
     @Override
     public TicketValidation validateTicketByQrCode(UUID qrCodeId) {
         QrCode qrCode = qrCodeRepository.findByIdAndStatus(qrCodeId, QrCodeStatusEnum.ACTIVE)
-                .orElseThrow(()->new QrCodeNotFoundException(String.format("QR code with id %s was not found",qrCodeId)));
+                .orElseThrow(() -> new QrCodeNotFoundException(
+                        String.format("QR code with id %s was not found", qrCodeId)));
 
-        Ticket ticket = qrCode.getTicket();
-
-        return validateTicket(ticket);
+        return validateTicket(qrCode.getTicket(), TicketValidationMethodEnum.QR_SCAN);
     }
 
-    private TicketValidation validateTicket(Ticket ticket) {
+    private TicketValidation validateTicket(Ticket ticket, TicketValidationMethodEnum method) {
         TicketValidation ticketValidation = new TicketValidation();
         ticketValidation.setTicket(ticket);
-        ticketValidation.setValidationMethod(TicketValidationMethodEnum.QR_SCAN);
+        ticketValidation.setValidationMethod(method);
 
         TicketValidationStatusEnum ticketValidationStatus = ticket.getTicketValidations()
                 .stream()
                 .filter(v -> TicketValidationStatusEnum.VALID.equals(v.getStatus()))
                 .findFirst()
-                .map(v->TicketValidationStatusEnum.INVALID)
+                .map(v -> TicketValidationStatusEnum.INVALID)
                 .orElse(TicketValidationStatusEnum.VALID);
 
         ticketValidation.setStatus(ticketValidationStatus);
@@ -49,9 +48,12 @@ public class TicketValidationServiceImpl implements TicketValidationService {
         return ticketValidationRepository.save(ticketValidation);
     }
 
+
     @Override
     public TicketValidation validateTicketManually(UUID ticketId) {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(TicketNotFoundException::new);
-        return validateTicket(ticket);
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(TicketNotFoundException::new);
+
+        return validateTicket(ticket, TicketValidationMethodEnum.MANUAL);
     }
 }
